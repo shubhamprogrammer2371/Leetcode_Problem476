@@ -1,0 +1,57 @@
+int findComplement(int num) {
+    int bit_arr[31] = {0} , size = 0 , ans = 0;
+    while(num)
+    {
+        bit_arr[size++] = !(num&1);
+        num >>= 1;
+    }
+    for( int i = 0 ; i < size ; i++)
+        ans += bit_arr[i]*pow(2,i);
+    return ans;
+}
+
+
+--------------------------------------------------------------------------------------
+
+
+int findComplement(int num){
+    return pow(2, (int)(log2(num) / log2(2)) + 1) - 1 - num;
+}
+
+
+-------------------------------------------------------------------------------------
+
+
+int findComplement(int n)
+{
+    return (1u << 32 - __builtin_clz(n)) - 1 - n;
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+int findComplement(int num) {
+    unsigned int mask = ~0;
+    while (mask & num)
+        mask <<= 1;
+    return ~num ^ mask;
+}
+
+/*
+Intuition
+To flip the bits in a number we have the ~ operator. However, first we need to find a mask that will keep all leftmost binary digits as 0.
+Example:
+num          = 00000101
+~num         = 11111010
+mask         = 11111000
+~num ^ mask  = 00000010
+Approach
+To generate the mask, we apply ~0 (portable way of getting a mask of 0xFFFFFFFF) and keep shifting it until & is 0. Then apply ^ of ~num and the mask.
+a b   ^
+--------
+0 0 | 1
+0 1 | 0
+1 0 | 0
+1 1 | 1
+*/
